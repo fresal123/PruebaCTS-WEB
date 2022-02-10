@@ -1,0 +1,52 @@
+﻿@page "/topsales"
+@using Model
+@using Interfaces
+@inject IProductsService ProductService
+@inject NavigationManager NavigationManager
+
+<h3>Los mas vendidos</h3>
+
+@if (purchases == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var purchase in purchases)
+            {
+            <tr>
+                <td>@purchase.NameProduct</td>
+                <td>@purchase.DescriptionProduct</td>
+                <td>@purchase.PriceProduct</td>
+                <td>@purchase.Amount</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Purchase> purchases;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            purchases = await ProductService.GetTopSales();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+}

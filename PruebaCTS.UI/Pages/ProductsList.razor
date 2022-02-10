@@ -1,0 +1,72 @@
+﻿@page "/productslist"
+@using Model
+@using Interfaces
+@inject IProductsService ProductService
+@inject NavigationManager NavigationManager
+
+<h3>Lista de Productos</h3>
+
+<p>Esta pagina muestra la lista de productos</p>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Description</td>
+                    <td>@product.Price</td>
+                    <td><a href="/productsdetails/@product.Id"><i>Editar</i></a></td>
+                    <td><input type="button" value="Eliminar" @onclick="(() => DeleteProduct(product.Id))" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private IEnumerable<Products> products;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            products = await ProductService.GetAllProducts();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    protected async void DeleteProduct(int id)
+    {
+        try
+        {
+            await ProductService.DeleteProducts(id);
+            NavigationManager.NavigateTo("/productsdetails");
+            NavigationManager.NavigateTo("/productslist");
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+}

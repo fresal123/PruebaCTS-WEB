@@ -1,0 +1,62 @@
+﻿@page "/productsdetails"
+@page "/productsdetails/{id:int}"
+@using Model
+@using Interfaces
+@inject IProductsService ProductsService
+@inject NavigationManager NavigationManager
+
+<h3>Ingresar Producto</h3>
+
+<EditForm Model="@products">
+    <table class="table">
+        <tr>
+            <td>Id:</td>
+            <td><input type="number" @bind="products.Id" disabled /></td>
+        </tr>
+        <tr>
+            <td>Nombre:</td>
+            <td><input type="text" @bind="products.Name" /></td>
+        </tr>
+        <tr>
+            <td>Descripción:</td>
+            <td><input type="text" @bind="products.Description" /></td>
+        </tr>
+        <tr>
+            <td>Precio:</td>
+            <td><input type="number" @bind="products.Price" /></td>
+        </tr>
+        <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="submit" value="Save" @onclick="SaveProduct" />
+                <input type="button" value="Cancel" @onclick="CancelProduct" />
+            </td>
+        </tr>
+    </table>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int id { get; set; }
+
+    Products products = new Products();
+
+    protected void CancelProduct()
+    {
+        NavigationManager.NavigateTo("/productslist");
+    }
+
+    protected async Task SaveProduct()
+    {
+        await ProductsService.SaveProducts(products);
+
+        NavigationManager.NavigateTo("/productslist");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (id != 0)
+        {
+            products = await ProductsService.GetDetails(id);
+        }
+    }
+}

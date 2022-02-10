@@ -1,0 +1,94 @@
+﻿@page "/purchaselist"
+@using Model
+@using Interfaces
+@inject IProductsService ProductService
+@inject NavigationManager NavigationManager
+
+<h3>Lista Para Comprar</h3>
+
+@if (purchases == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripcion</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var purchase in purchases)
+            {
+                <tr>
+                    <td>@purchase.NameProduct</td>
+                    <td>@purchase.DescriptionProduct</td>
+                    <td>@purchase.PriceProduct</td>
+                    <td><input type="number" @bind="purchase.Amount" /></td>
+                    <td><input type="button" value="Añadir" @onclick="(() => AddCart(purchase.IdProduct, purchase.Amount))" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <td><input type="button" value="Comprar" @onclick="(() => Buy())" /></td>
+}
+
+@code {
+    private IEnumerable<Purchase> purchases;
+    private List<Purchase> purchasesBuy = new List<Purchase>();
+    int[] add = new int[1];
+    int position = -1;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            purchases = await ProductService.GetAllShopping();
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    protected void AddCart(int id, int amount)
+    {
+        try
+        {
+            position++;
+            add[position] = id;
+            Array.Resize(ref add, add.Length + 1);
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+
+    protected async void Buy()
+    {
+        try
+        {
+            foreach (var purchase in purchases)
+            {
+                if (add.Contains(purchase.IdProduct) && purchase.IdProduct != 0)
+                {
+                    purchasesBuy.Add(purchase);
+                }
+            }
+
+            await ProductService.Buy(purchasesBuy);
+
+            NavigationManager.NavigateTo("/topsales");
+        }
+        catch (Exception)
+        {
+            throw;
+        }
+    }
+}
