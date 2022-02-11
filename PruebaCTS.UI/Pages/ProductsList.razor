@@ -6,8 +6,6 @@
 
 <h3>Lista de Productos</h3>
 
-<p>Esta pagina muestra la lista de productos</p>
-
 @if (products == null)
 {
     <p><em>Loading...</em></p>
@@ -28,14 +26,14 @@ else
         <tbody>
             @foreach (var product in products)
             {
-                <tr>
-                    <td>@product.Id</td>
-                    <td>@product.Name</td>
-                    <td>@product.Description</td>
-                    <td>@product.Price</td>
-                    <td><a href="/productsdetails/@product.Id"><i>Editar</i></a></td>
-                    <td><input type="button" value="Eliminar" @onclick="(() => DeleteProduct(product.Id))" /></td>
-                </tr>
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price</td>
+                <td><a href="/productsdetails/@product.Id"><i>Editar</i></a></td>
+                <td><input type="button" value="Eliminar" @onclick="(() => DeleteProduct(product.Id))" /></td>
+            </tr>
             }
         </tbody>
     </table>

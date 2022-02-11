@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PruebaCTS.UI.Data
+﻿namespace PruebaCTS.UI.Data
 {
     public class SqlConfiguration
     {

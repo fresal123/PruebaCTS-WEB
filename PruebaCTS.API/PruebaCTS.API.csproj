@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PruebaCTS.Data\PruebaCTS.Data.csproj" />
     <ProjectReference Include="..\PruebaCTS.Model\PruebaCTS.Model.csproj" />
   </ItemGroup>
 

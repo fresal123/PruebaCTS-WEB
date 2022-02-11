@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PruebaCTS.Data", "PruebaCTS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PruebaCTS.API", "PruebaCTS.API\PruebaCTS.API.csproj", "{F269A829-7DCA-4BBE-8363-30B7D210ABAC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PruebaCTS.Test", "PruebaCTS.Test\PruebaCTS.Test.csproj", "{D702B5A1-8A09-4E8C-B44B-90DD9FD13997}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PruebaCTS.Test", "PruebaCTS.Test\PruebaCTS.Test.csproj", "{D702B5A1-8A09-4E8C-B44B-90DD9FD13997}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,10 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PruebaCTS.API.Manager;
+using PruebaCTS.Data.Logger;
 using PruebaCTS.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace PruebaCTS.API.Controllers
@@ -15,11 +14,13 @@ namespace PruebaCTS.API.Controllers
     {
         private readonly SqlConfiguration _configuration;
         ProductsManager manager;
+        private Logs _logs;
 
         public ProductsController(SqlConfiguration configuration)
         {
             _configuration = configuration;
             manager = new ProductsManager(configuration.ConnectionString);
+            _logs = new Logs();
         }
 
         /// <summary>
@@ -42,6 +43,8 @@ namespace PruebaCTS.API.Controllers
             }
             catch (Exception ex)
             {
+                _logs.Add("Error en metodo: DeleteProducts. Clase: ProducsController");
+                _logs.Add(ex.Message);
                 return StatusCode(500, $"Ocurrio un error: {ex.Message}");
             }
         }
@@ -67,6 +70,8 @@ namespace PruebaCTS.API.Controllers
             }
             catch (Exception ex)
             {
+                _logs.Add("Error en metodo: GetAllProducts. Clase: ProducsController");
+                _logs.Add(ex.Message);
                 return StatusCode(500, $"Ocurrio un error: {ex.Message}");
             }
         }
@@ -92,6 +97,8 @@ namespace PruebaCTS.API.Controllers
             }
             catch (Exception ex)
             {
+                _logs.Add("Error en metodo: GetProductsDetails. Clase: ProducsController");
+                _logs.Add(ex.Message);
                 return StatusCode(500, $"Ocurrio un error: {ex.Message}");
             }
         }
@@ -117,7 +124,8 @@ namespace PruebaCTS.API.Controllers
             }
             catch (Exception ex)
             {
-
+                _logs.Add("Error en metodo: InsertProduct. Clase: ProducsController");
+                _logs.Add(ex.Message);
                 return StatusCode(500, $"Ocurrio un error: {ex.Message}");
             }
         }
@@ -143,7 +151,8 @@ namespace PruebaCTS.API.Controllers
             }
             catch (Exception ex)
             {
-
+                _logs.Add("Error en metodo: UpdateProducts. Clase: ProducsController");
+                _logs.Add(ex.Message);
                 return StatusCode(500, $"Ocurrio un error: {ex.Message}");
             }
         }
@@ -169,6 +178,8 @@ namespace PruebaCTS.API.Controllers
             }
             catch (Exception ex)
             {
+                _logs.Add("Error en metodo: GetAllShopping. Clase: ProducsController");
+                _logs.Add(ex.Message);
                 return StatusCode(500, $"Ocurrio un error: {ex.Message}");
             }
         }
@@ -194,7 +205,8 @@ namespace PruebaCTS.API.Controllers
             }
             catch (Exception ex)
             {
-
+                _logs.Add("Error en metodo: Buy. Clase: ProducsController");
+                _logs.Add(ex.Message);
                 return StatusCode(500, $"Ocurrio un error: {ex.Message}");
             }
         }
@@ -220,6 +232,8 @@ namespace PruebaCTS.API.Controllers
             }
             catch (Exception ex)
             {
+                _logs.Add("Error en metodo: GetTopSales. Clase: ProducsController");
+                _logs.Add(ex.Message);
                 return StatusCode(500, $"Ocurrio un error: {ex.Message}");
             }
         }
